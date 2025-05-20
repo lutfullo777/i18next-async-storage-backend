@@ -1,19 +1,14 @@
 import * as utils from './utils';
+import {MMKV} from 'react-native-mmkv'
 
-// get from whatever version of react native that is being used.
-const AsyncStorage = require('react-native-mmkv') || {};
 
+const MMStorage = new MMKV()
 const storage = {
   setItem(key, value) {
-    if (AsyncStorage) {
-      return AsyncStorage.set(key, value);
-    }
+      return MMStorage.set(key, value);
   },
   getItem(key, value) {
-    if (AsyncStorage) {
-      return AsyncStorage.getString(key, value);
-    }
-    return undefined;
+      return MMStorage.getString(key, value);
   }
 };
 
@@ -41,12 +36,8 @@ class Cache {
     const store = {};
     const nowMS = new Date().getTime();
 
-    if (!AsyncStorage) {
-      return callback(null, null);
-    }
+    const local = storage.getItem(`${this.options.prefix}${language}-${namespace}`)
 
-    storage.getItem(`${this.options.prefix}${language}-${namespace}`)
-      .then(local => {
         if (local) {
           local = JSON.parse(local);
           if (
@@ -63,15 +54,9 @@ class Cache {
         }
 
         callback(null, null);
-      })
-      .catch(err => {
-        console.warn(err);
-        callback(null, null);
-      });
   }
 
   save(language, namespace, data) {
-    if (AsyncStorage) {
       data.i18nStamp = new Date().getTime();
 
       // language version (if set)
@@ -81,7 +66,6 @@ class Cache {
 
       // save
       storage.setItem(`${this.options.prefix}${language}-${namespace}`, JSON.stringify(data));
-    }
   }
 }
 
