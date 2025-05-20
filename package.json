@@ -3,7 +3,6 @@
   "version": "1.0.2",
   "description": "caching layer backend for i18next using react native async storage",
   "main": "./index.js",
-  "jsnext:main": "dist/es/index.js",
   "keywords": [
     "i18next",
     "i18next-backend"
@@ -30,7 +29,7 @@
     "yargs": "6.6.0"
   },
   "peerDependencies": {
-    "@react-native-community/async-storage": "*"
+    "react-native-mmkv": "*"
   },
   "scripts": {
     "clean": "rimraf dist && mkdirp dist",
