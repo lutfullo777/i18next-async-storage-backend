@@ -1,17 +1,17 @@
 import * as utils from './utils';
 
 // get from whatever version of react native that is being used.
-const AsyncStorage = require('@react-native-community/async-storage') || {};
+const AsyncStorage = require('react-native-mmkv') || {};
 
 const storage = {
   setItem(key, value) {
     if (AsyncStorage) {
-      return AsyncStorage.setItem(key, value);
+      return AsyncStorage.set(key, value);
     }
   },
   getItem(key, value) {
     if (AsyncStorage) {
-      return AsyncStorage.getItem(key, value);
+      return AsyncStorage.getString(key, value);
     }
     return undefined;
   }
