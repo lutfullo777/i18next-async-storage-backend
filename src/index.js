@@ -36,7 +36,7 @@ class Cache {
     const store = {};
     const nowMS = new Date().getTime();
 
-    const local = storage.getItem(`${this.options.prefix}${language}-${namespace}`)
+    let local = storage.getItem(`${this.options.prefix}${language}-${namespace}`)
 
         if (local) {
           local = JSON.parse(local);
